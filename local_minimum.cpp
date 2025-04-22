@@ -4,8 +4,8 @@
 // A local minimum is:
 //   an element where each immediate neighbor is greater or equal
 //   That includes potentially the first or last, which only have one neighbor.
-//   i.e. Most elements have two immediate neighbor, two elements have one neighbor.
-//   It is important remember greater or equal.
+//   i.e. Most elements have two immediate neighbor, two elements have one
+//   neighbor. It is important remember greater or equal.
 //
 // One could do:
 //  Check each end.
@@ -50,13 +50,13 @@
 //  - Or we go in the direction of the down, away from the up.
 //    We go down until we hit bottom, and either across or back up.
 //
-// Now, it is tempting therefore to just start in the middle and go in one direction.
-// This will work. It provides an O(n/2) solution. However interviewer
-// asked a very leading question, wanting a lg(n) solution.
+// Now, it is tempting therefore to just start in the middle and go in one
+// direction. This will work. It provides an O(n/2) solution. However
+// interviewer asked a very leading question, wanting a lg(n) solution.
 //
-// If we start in the middle and decide on a direction, can we cut over the middle
-// of the correct half? Like, if we go to far toward the down, and hit up,
-// just reverse course?
+// If we start in the middle and decide on a direction, can we cut over the
+// middle of the correct half? Like, if we go to far toward the down, and hit
+// up, just reverse course?
 //
 // Consider the picture.
 // There are 15 values.
@@ -70,9 +70,11 @@
 // Look at the middle index 5, value 1.
 // Down is to the left.
 // So are considering the range [3,5].
-// This is of length 3 and the middle is index 4, value 0, and it is a local minimum.
+// This is of length 3 and the middle is index 4, value 0, and it is a local
+// minimum.
 //
-// In order to keep the length=3 special, the first step will be to check the edges.
+// In order to keep the length=3 special, the first step will be to check the
+// edges.
 //
 // This is not the most convincing, "proof by example", but there is a
 // vaguely good idea here, of going toward the down, and knowing
@@ -88,56 +90,56 @@
 //
 // Spec is int but we have chars because of our input data.
 //
-size_t local_minimum(const char* data, size_t n)
-{
-	size_t local_minimum_helper(const char* data, size_t start, size_t end);
+size_t local_minimum(const char *data, size_t n) {
+  size_t local_minimum_helper(const char *data, size_t start, size_t end);
 
-	if (n == 0) return 0;
-	// length 1 means the first is the answer
-	if (n == 1) return 0;
-	// Check the first element.
-	if (data[0] <= data[1]) return 0;
-	// Check the last element.
-	if (data[n - 1] <= data[n - 2]) return n - 1;
-	// Now every element has two neighbors, without bounds checking.
-	return local_minimum_helper(data, 0, n);
+  if (n == 0)
+    return 0;
+  // length 1 means the first is the answer
+  if (n == 1)
+    return 0;
+  // Check the first element.
+  if (data[0] <= data[1])
+    return 0;
+  // Check the last element.
+  if (data[n - 1] <= data[n - 2])
+    return n - 1;
+  // Now every element has two neighbors, without bounds checking.
+  return local_minimum_helper(data, 0, n);
 }
 
-size_t local_minimum_helper(const char* data, size_t start, size_t end)
-{
-	size_t middle = start + (end - start) / 2;
-	if (data[middle - 1] >= data[middle] && data[middle] <= data[middle+1])
-		return middle;
-	if (data[middle - 1] <= data[middle])
-		return local_minimum_helper(data, start, middle);
-	return local_minimum_helper(data, middle, end);
+size_t local_minimum_helper(const char *data, size_t start, size_t end) {
+  size_t middle = start + (end - start) / 2;
+  if (data[middle - 1] >= data[middle] && data[middle] <= data[middle + 1])
+    return middle;
+  if (data[middle - 1] <= data[middle])
+    return local_minimum_helper(data, start, middle);
+  return local_minimum_helper(data, middle, end);
 }
 
-int main()
-{
-	printf("test local_minimum\n");
-	printf("01234567890123456 index\n");
+int main() {
+  printf("test local_minimum\n");
+  printf("01234567890123456 index\n");
 
-	struct STR {
-		const char* chars;
-		size_t size;
-	};
+  struct STR {
+    const char *chars;
+    size_t size;
+  };
 #define MAKE_STR(s) {(s), (sizeof(s) - 1)}
-	STR data[] = {
-		MAKE_STR("432101233211234"),
-		MAKE_STR("321012321000123"),
-		MAKE_STR("A"),
-		MAKE_STR("12"),
-		MAKE_STR("21"),
-		MAKE_STR("123456789"),
-		MAKE_STR("987654321"),
-	};
+  STR data[] = {
+      MAKE_STR("432101233211234"),
+      MAKE_STR("321012321000123"),
+      MAKE_STR("A"),
+      MAKE_STR("12"),
+      MAKE_STR("21"),
+      MAKE_STR("123456789"),
+      MAKE_STR("987654321"),
+  };
 
-	for (auto s: data)
-	{
-		int answer = (int)local_minimum(s.chars, s.size);
-		printf("%s[%d]:%c\n", s.chars, answer, s.chars[answer]);
-	}
+  for (auto s : data) {
+    int answer = (int)local_minimum(s.chars, s.size);
+    printf("%s[%d]:%c\n", s.chars, answer, s.chars[answer]);
+  }
 
-	// TODO: A lot more testing.
+  // TODO: A lot more testing.
 }
