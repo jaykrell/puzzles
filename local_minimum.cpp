@@ -86,7 +86,7 @@
 // Return the index, or n for error cases.
 // i.e. n=0: error
 // n=1: the element is min and max
-// n=2: return the max
+// n=2: return the min
 // n=3: starts to get interesting, any might be the answer
 // n=2 can be absorbed into checking the edges if they are the answer,
 // so that later logic can avoid bounds checks.
