@@ -44,8 +44,11 @@
 //
 // So again, "what goes down, must go back up" (or stay equal to the end).
 //
-// It is a little hard to make the leap, but this means that if we look
-// in the middle, we will see 3 elements and either:
+// Disclosure: I was stuck on the lg(n) solution and interviewer basically
+// gave up on me and gave the answer.
+//
+// It is a little hard to make the leap (again, I didn't), but this means
+// that if we look in the middle, we will see 3 elements and either:
 //  - The middle is a solution.
 //  - Or we go in the direction of the down, away from the up.
 //    We go down until we hit bottom, and either across or back up.
